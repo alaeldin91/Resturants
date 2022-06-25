@@ -14,6 +14,7 @@ import store from './store';
 export default () => {
     return axios.create({
      apiURL: store.state.apiURL,
+     serverPath:store.state.serverPath,
      headers:{
         'Content-type':'multipart/form-data'
     }

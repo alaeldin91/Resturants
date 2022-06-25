@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-
-use Illuminate\Support\Str;
 
 use App\Models\User;
 use Carbon\Carbon;
@@ -49,12 +46,16 @@ class AuthControll extends Controller
 
 
         $user = new User();
-        $path = $request->file('image')->store('owners_images');
+        //   $path = $request->file('image')->store('owners_images');
+        $file = $request->file('image');
+        $filename = date('YmdHi') . $file->getClientOriginalName();
+        $file->move(public_path('owner_images'), $filename);
+        $data['image'] = $filename;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->role = 'owner';
-        $user->image = $path;
+        $user->image = $filename;
 
 
         if ($user->save()) {
@@ -99,25 +100,54 @@ class AuthControll extends Controller
     }
     public function getOwner()
     {
-        $user = User::where('role', 'owner')->paginate(20)->toArray();
-        return array_reverse($user);;
+        $users = User::where('role', 'owner')->paginate(20);
+        return response()->json($users);
     }
     public function deleteOwner($id)
     {
         $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'delete Owner Successfully']);
+        if ($user->delete()) {
+
+            unlink("owner_images/" . $user->image);
+
+            return response()->json(['message' => 'delete Owner Successfully', 'status_code' => 200], 200);
+        } else {
+            return response()->json(['message' => 'some error occured, please try again', 'status_code' => 500], 500);
+        }
     }
-    public function updateAdmin(Request $request,$id)
+    public function updateAdmin(Request $request, $id)
+    { 
+       $input = $request->all();
+       $user = User::find($id);
+       if($request->file=''){
+           $path="/upload";
+           if($user->image != ''  && $user->image != null){
+            $file_old = $path.$user->file;
+            unlink($file_old);
+       }
+          $file = $request->image;
+          $filename = $file->getClientOriginalName();
+          $file->move($path, $filename);
+           $input['image']=  $filename;
+
+       }
+     
+        if ($user->update($input)) {
+            return response()->json(['message' => 'Successfully Update Admin', 'data' => $user, 'status_code' => 200], 200);
+        }
+
+
+        /**$user->update($request->all());
+        if ($user->update($request->all())) {
+            return response()->json(['message' => 'Successfully Update Admin', 'data' => $user, 'status_code' => 200], 200);
+        } else {
+            return response()->json(['message' => 'some error occured, please try again', 'status_code' => 500], 500);
+        }**/
+    }
+    public function editAdmin($id)
     {
         $user = User::findOrFail($id);
-       
-        $user->update($request->all());
-        return response()->json(['nessage'=>'Successfully Update Admin','data'=>$user]);
-    }
-    public function editAdmin($id){
-       $user = User::findOrFail($id);
 
-      return  response()->json(['User'=>$user]);
+        return  response()->json(['User' => $user]);
     }
 }

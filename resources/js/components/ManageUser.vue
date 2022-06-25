@@ -54,6 +54,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Image Profile</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -61,6 +62,13 @@
                 <tr v-for="(user, key) in users" :key="key">
                   <td>{{ user.name }}</td>
                   <td>{{ user.email }}</td>
+                  <td>
+                    <img
+                      :src="`/owner_images/${user.image}`"
+                      :alt="`${user.name}`"
+                      class="rounded-circle img-40 align-top mr-15"
+                    />
+                  </td>
                   <td>
                     <a href="#" @click="editUser(user)"
                       ><i class="ik ik-edit-2 f-16 mr-15 text-green"></i
@@ -170,19 +178,20 @@
                   />
                 </div>
                 <div class="form-group">
-                   <span
+                  <span
                     class="text-danger error"
                     v-text="validations.getMessage('image')"
                   ></span>
-                  <div v-if="user.image.name">
-                    <img src="" ref="newImageProfileDisplay" class="w-150px" />
+                  <div v-if="user.image">
+                    <img :src="`/owner_images/${user.image}`" ref="newImageProfileDisplay" class="w-150px"  v-bind:alt="user.mage" />
                   </div>
                   <input
                     type="file"
                     v-on:change="attachImage"
                     ref="newImageProfile"
                     class="form-control"
-                    id="image"
+                    v-bind="user.image"
+                 
                   />
                 </div>
               </div>
@@ -215,7 +224,9 @@ export default {
   data() {
     return {
       users: [],
+      results: "",
       user: {
+        path: "http://127.0.0.1:8000",
         id: "",
         name: "",
         email: "",
@@ -235,6 +246,7 @@ export default {
     modalShow() {
       $("#UserModal").modal("show");
     },
+
     attachImage() {
       //Use Read file Todo
       this.user.image = this.$refs.newImageProfile.files[0];
@@ -271,11 +283,17 @@ export default {
 
       try {
         const response = await OwnerService.creatOwner(formData);
+
         Toast.fire({
           icon: "success",
           title: response.data.message,
         });
         this.getAllAdmin();
+        this.user.name = "";
+        this.user.email = "";
+        this.user.password = "";
+        this.user.password_confirmation = "";
+        this.user.image = "";
       } catch (error) {
         if (error.response.status == 422) {
           this.validations.setMessage(error.response.data.errors);
@@ -287,36 +305,6 @@ export default {
           });
         }
       }
-
-      /**window.axios
-        .post("api/auth/addAdministrator", UserData)
-        .then((response) => {
-          this.validations.setMessage("");
-          this.user.id = "";
-          this.user.name = "";
-          this.user.password = "";
-          this.user.email = "";
-          this.user.image = "";
-          this.user.password_confirmation = "";
-
-          Toast.fire({
-            icon: "success",
-            title: "Add Administartor successfully",
-          });
-          this.getAllAdmin();
-        })
-
-        .catch((error) => {
-          if (error.response.status == 422) {
-            this.validations.setMessage(error.response.data.errors);
-            console.log("error", error.response.data.errors);
-          } else if (error.response.status == 500) {
-            Toast.fire({
-              icon: "error ",
-              title: "Error  is not Save Data",
-            });
-          }
-        });**/
     },
 
     editUser(user) {
@@ -328,8 +316,8 @@ export default {
           this.user.id = response.data.User.id;
           this.user.name = response.data.User.name;
           this.user.email = response.data.User.email;
-          this.user.password = response.data.password;
-          console.log("password", response.data.password);
+          this.user.image = response.data.User.image
+          console.log("image", response.data.User.image);
         });
       $("#UserModal").modal("show");
     },
@@ -346,8 +334,9 @@ export default {
         timer: 1500,
         timerProgressBar: true,
       });
+      try{
       window.axios
-        .post("api/auth/updateOwner/" + `${userData.id}`, userData)
+        .post("api/auth/updateOwner/"+`${userData.id}`, userData)
         .then((response) => {
           console.log(response.data);
           Toast.fire({
@@ -357,11 +346,18 @@ export default {
           this.getAllAdmin();
           $("#UserModal").modal("hide"); // hide modal
         });
+      }
+        catch(error){
+
+      console.log(userData.image);
+    
+}
     },
     close() {
       $("#UserModal").modal("hide"); // hide modal
     },
-    deleteAdmin(user) {
+
+    deleteAdmin: async function (user) {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -375,7 +371,7 @@ export default {
       });
       this.$swal
         .fire({
-          title: "are you sure",
+          title: "are you Delete Admin " + user.name,
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
@@ -384,45 +380,42 @@ export default {
           confirmButtonText: "yes, delete it!",
         })
         .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              window.axios
-                .get("api/auth/deleteowner/" + `${user.id}`)
-                .then((response) => {
-                  console.log("successfully deleted");
-                  Toast.fire({
-                    icon: "success",
-                    title: "Delete Administartor successfully",
-                  });
-                  this.getAllAdmin();
-                });
-            } catch (error) {}
+          try {
+            if (result.isConfirmed) OwnerService.deleteOwner(user.id);
+            Toast.fire({
+              icon: "success",
+              title: "Delete Administartor successfully",
+            });
+
+            this.getAllAdmin();
+          } catch (error) {
+            if (error)
+              Toast.fire({
+                icon: "error ",
+                title: "Error  is not Save Data",
+              });
           }
         });
     },
-    getAllAdmin() {
-      window.axios
-        .get("api/auth/allUsers")
-        .then((response) => {
-          this.users = response.data.data;
-          console.log("Users", response.data.data);
-        })
-        .catch((error) => {
-          console.log(error.response);
+
+    getAllAdmin: async function () {
+      try {
+        const response = await OwnerService.loadOwner();
+        this.users = response.data.data;
+        this.user.path;
+        console.log(response.data.data);
+      } catch (error) {
+        Toast.fire({
+          icon: "error ",
+          title: "Error  to get Data",
         });
+      }
     },
   },
+
   //GetAll Users Administrator
-  created() {
-    window.axios
-      .get("api/auth/allUsers")
-      .then((response) => {
-        this.users = response.data.data;
-        console.log("Users", response.data.data);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+  mounted() {
+    this.getAllAdmin();
   },
 };
 </script>
