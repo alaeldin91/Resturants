@@ -21,12 +21,12 @@
       <div class="nav-container">
         <nav id="main-menu-navigation" class="navigation-main">
           <div class="nav-item">
-            <router-link to="/dashboard"
+            <router-link to="home/dashboard"
               ><i class="ik ik-home"></i><span>Dashboard</span></router-link
             >
           </div>
           <div class="nav-item">
-            <router-link to="/manageUser"
+            <router-link to="home/manageUser"
               ><i class="ik ik-users"></i>
               <span>Manage User </span></router-link
             >
