@@ -300,8 +300,8 @@ export default {
           console.log("error", error.response.data.errors);
         } else if (error.response.status == 500) {
           Toast.fire({
-            icon: "error ",
-            title: "Error  is not Save Data",
+            icon: "error",
+            title: error.response.data.errors,
           });
         }
       }

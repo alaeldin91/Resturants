@@ -23505,8 +23505,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
 /* harmony import */ var _components_Home_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Home.vue */ "./resources/js/components/Home.vue");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/auth_service */ "./resources/js/services/auth_service.js");
+
 
 
 var routes = [{
@@ -23525,7 +23527,14 @@ var routes = [{
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_ManageUser_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/ManageUser.vue */ "./resources/js/components/ManageUser.vue"));
     }
-  }]
+  }],
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (!_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].islogin()) {
+      next('/login');
+    } else {
+      next();
+    }
+  }
 }, {
   path: '/register',
   component: function component() {
@@ -23539,11 +23548,75 @@ var routes = [{
   },
   name: 'login'
 }];
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_1__.createRouter)({
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_1__.createWebHistory)(),
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createRouter)({
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createWebHistory)(),
   routes: routes
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "./resources/js/services/apiAuth.js":
+/*!******************************************!*\
+  !*** ./resources/js/services/apiAuth.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/services/store.js");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+    apiURL: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.apiURL,
+    serverPath: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.serverPath
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/services/auth_service.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/auth_service.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _apiAuth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./apiAuth */ "./resources/js/services/apiAuth.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  register: function register(user) {
+    return (0,_apiAuth__WEBPACK_IMPORTED_MODULE_0__["default"])().post("api/auth/register", user);
+  },
+  login: function login(user) {
+    var _this = this;
+
+    return (0,_apiAuth__WEBPACK_IMPORTED_MODULE_0__["default"])().post("api/auth/login", user).then(function (response) {
+      if (response.status === 200) {
+        _this.setToken(response.data);
+      }
+
+      return response.data;
+    });
+  },
+  setToken: function setToken(user) {
+    localStorage.setItem('resturant_token', JSON.stringify(user));
+  },
+  islogin: function islogin() {
+    var token = localStorage.getItem('resturant_token');
+    return token != null;
+  }
+});
 
 /***/ }),
 

@@ -110,8 +110,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log("error", _context.t0.response.data.errors);
                 } else if (_context.t0.response.status == 500) {
                   Toast.fire({
-                    icon: "error ",
-                    title: "Error  is not Save Data"
+                    icon: "error",
+                    title: _context.t0.response.data.errors
                   });
                 }
 

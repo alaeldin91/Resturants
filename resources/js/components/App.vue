@@ -1,19 +1,11 @@
 <template>
   <main>
-  
-      <router-view></router-view>   
-  
+    <router-view></router-view>
   </main>
-  
-
-
 </template>
 
 <script>
-
-export default {
-
-}
+export default {};
 </script>
 
 <style>

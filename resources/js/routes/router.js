@@ -2,7 +2,7 @@ import {createWebHistory,createRouter} from 'vue-router'
 
 
 import Home from '../components/Home.vue';
-
+import Auth from '../services/auth_service'
 const routes = [
     
     {
@@ -21,7 +21,16 @@ const routes = [
         name:'manageUser',
         component:()=>import('../components/ManageUser.vue')    
     },
-]
+],
+beforeEnter: (to, from, next) => {
+    if(!Auth.islogin()){
+      next('/login')
+    }
+    else{
+        next()
+
+    }
+}
 
 },
 
