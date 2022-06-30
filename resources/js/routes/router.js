@@ -7,7 +7,6 @@ const routes = [
     
     {
         path: '/home',
-        name: 'Home',
         component:  Home,
         children: [
               
@@ -24,7 +23,7 @@ const routes = [
 ],
 beforeEnter: (to, from, next) => {
     if(!Auth.islogin()){
-      next('/login')
+      next('login')
     }
     else{
         next()

@@ -200,10 +200,10 @@
               <a class="dropdown-item" href="#"
                 ><i class="ik ik-user dropdown-icon"></i> Profile</a
               >
-              <a class="dropdown-item" href="#">
+              <button class="dropdown-item" v-on:click="logout">
                 <i class="ik ik-power dropdown-icon"></i>
                 Logout
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -214,5 +214,13 @@
    
 </template>
 <script>
-export default {};
+import auth from './../../services/auth_service'
+export default {
+  methods:{
+    logout:async function(){
+        auth.logout()
+        this.$router.push('/login')
+    }
+  }
+};
 </script>

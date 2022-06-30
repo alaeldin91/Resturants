@@ -405,10 +405,10 @@ export default {
         this.user.path;
         console.log(response.data.data);
       } catch (error) {
-        Toast.fire({
-          icon: "error ",
-          title: "Error  to get Data",
-        });
+        if(error.response.status ===401){
+
+
+}
       }
     },
   },

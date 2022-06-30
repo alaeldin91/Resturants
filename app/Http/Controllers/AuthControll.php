@@ -15,9 +15,9 @@ class AuthControll extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'min:4', 'confirmed']
-
-
+            'password' => ['required', 'min:4'],
+            'password_confirmation' => 'required|same:password',
+            
         ]);
 
 
@@ -82,6 +82,8 @@ class AuthControll extends Controller
             $tokenData = $user->createToken(' personal access tokens', ['do-anything']);
         } else {
             $tokenData = $user->createToken(' personal access tokens', ['can-create']);
+            return response()->json(['message' => 'Sorry u are not admin', 'status_code' => 401],401);
+
         }
         $token = $tokenData->token;
         if ($request->remeber_me) {

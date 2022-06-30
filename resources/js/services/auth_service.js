@@ -20,9 +20,25 @@ export default{
 
     },
     islogin(){
+
         const token = localStorage.getItem('resturant_token')
         return token != null
 
+    },
+    logout(){
+        api().post("api/auth/logout")
+         localStorage.removeItem('resturant_token')
+        
+
+    },
+    getAccessToken(){
+       const token = localStorage.getItem('resturant_token')
+       if(!token){
+           return null
+       }
+       else{
+           return token.access_token;
+       }
     }
 
 }

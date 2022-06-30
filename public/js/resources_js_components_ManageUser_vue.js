@@ -258,10 +258,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 _context3.prev = 9;
                 _context3.t0 = _context3["catch"](0);
-                Toast.fire({
-                  icon: "error ",
-                  title: "Error  to get Data"
-                });
+
+                if (_context3.t0.response.status === 401) {}
 
               case 12:
               case "end":
@@ -668,6 +666,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/services/store.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth_service */ "./resources/js/services/auth_service.js");
+
 
 
 /**export   function httpFile(){
@@ -684,6 +684,7 @@ __webpack_require__.r(__webpack_exports__);
     apiURL: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.apiURL,
     serverPath: _store__WEBPACK_IMPORTED_MODULE_1__["default"].state.serverPath,
     headers: {
+      authorization: 'Bearer ' + _auth_service__WEBPACK_IMPORTED_MODULE_2__["default"].getAccessToken(),
       'Content-type': 'multipart/form-data'
     }
   });

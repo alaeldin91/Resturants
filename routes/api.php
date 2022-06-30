@@ -17,26 +17,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix'=>'auth'],function(){
-Route::post('register',[AuthControll::class,'register']);
-Route::post('login',[AuthControll::class,'login']);
-Route::get('allUsers',[AuthControll::class,'getOwner']);
-Route::post('addAdministrator', [AuthControll::class, 'addAdministrator']);
-Route::get('deleteowner/{id}',[AuthControll::class,'deleteOwner']);
-Route::get('editAdmin/{id}',[AuthControll::class,'editAdmin']);
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('register', [AuthControll::class, 'register']);
+    Route::post('login', [AuthControll::class, 'login']);
+    Route::get('allUsers', [AuthControll::class, 'getOwner']);
+    Route::post('addAdministrator', [AuthControll::class, 'addAdministrator']);
+    Route::get('deleteowner/{id}', [AuthControll::class, 'deleteOwner']);
+    Route::get('editAdmin/{id}', [AuthControll::class, 'editAdmin']);
 
-Route::post('updateOwner/{id}',[AuthControll::class,'updateAdmin']);
-
-
+    Route::post('updateOwner/{id}', [AuthControll::class, 'updateAdmin']);
 
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('logout', [AuthControll::class, 'logout']);
-});
 
+
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('logout', [AuthControll::class, 'logout']);
+    });
 });
 Route::group(['prefix' => 'user'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
+      
 
         Route::get('edit_catogry', function () {
             return response()->json(['message' => 'successfully update', 'status_code' => 200], 200);
@@ -44,7 +45,5 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('create_catogry', function () {
             return response()->json(['message' => 'successfully create', 'status_code' => 200], 200);
         })->middleware('scope:do-anything');
-        
     });
 });
-
