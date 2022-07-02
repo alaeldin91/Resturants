@@ -10,7 +10,9 @@
           "
         >
           <div class="lavalite-bg">
-            <div class="lavalite-overlay"></div>
+            <div class="lavalite-overlay">
+              <img src="/img/auth/login-bg.jpg" alt="" />
+            </div>
           </div>
         </div>
         <div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
@@ -33,7 +35,6 @@
                   type="email"
                   v-model="user.email"
                   class="form-control"
-                 
                 />
                 <i class="ik ik-user"></i>
               </div>
@@ -47,7 +48,6 @@
                   type="password"
                   v-model="user.password"
                   class="form-control"
-          
                 />
                 <i class="ik ik-lock"></i>
               </div>
@@ -115,8 +115,8 @@ export default {
       });
       try {
         const response = await Auth.login(this.user);
-        console.log(response.data)
-        this.$router.push('/home')
+        console.log(response.data);
+        this.$router.push("/home");
       } catch (error) {
         console.log(error);
         switch (error.response.status) {
@@ -132,7 +132,7 @@ export default {
             break;
           case 500:
             this.validations.setMessage(error.response.data.errors);
-            console.log(error)
+            console.log(error);
             Toast.fire({
               icon: "error",
               title: "error occurd please try again",
@@ -154,4 +154,11 @@ export default {
 </script>
 
 <style>
+h3{
+  text-align: center;
+
+}
+p{
+  text-align:center;
+}
 </style>

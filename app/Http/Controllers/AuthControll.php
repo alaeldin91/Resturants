@@ -17,7 +17,7 @@ class AuthControll extends Controller
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'min:4'],
             'password_confirmation' => 'required|same:password',
-            
+
         ]);
 
 
@@ -49,7 +49,7 @@ class AuthControll extends Controller
         //   $path = $request->file('image')->store('owners_images');
         $file = $request->file('image');
         $filename = date('YmdHi') . $file->getClientOriginalName();
-        $file->move(public_path('owner_images'), $filename);
+        $file->move(public_path('owner_images/user'), $filename);
         $data['image'] = $filename;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -82,8 +82,7 @@ class AuthControll extends Controller
             $tokenData = $user->createToken(' personal access tokens', ['do-anything']);
         } else {
             $tokenData = $user->createToken(' personal access tokens', ['can-create']);
-            return response()->json(['message' => 'Sorry u are not admin', 'status_code' => 401],401);
-
+            return response()->json(['message' => 'Sorry u are not admin', 'status_code' => 401], 401);
         }
         $token = $tokenData->token;
         if ($request->remeber_me) {
@@ -118,22 +117,21 @@ class AuthControll extends Controller
         }
     }
     public function updateAdmin(Request $request, $id)
-    { 
-       $input = $request->all();
-       $user = User::find($id);
-       if($request->file=''){
-           $path="/upload";
-           if($user->image != ''  && $user->image != null){
-            $file_old = $path.$user->file;
-            unlink($file_old);
-       }
-          $file = $request->image;
-          $filename = $file->getClientOriginalName();
-          $file->move($path, $filename);
-           $input['image']=  $filename;
+    {
+        $input = $request->all();
+        $user = User::find($id);
+        if ($request->file = '') {
+            $path = "/upload";
+            if ($user->image != ''  && $user->image != null) {
+                $file_old = $path . $user->file;
+                unlink($file_old);
+            }
+            $file = $request->image;
+            $filename = $file->getClientOriginalName();
+            $file->move($path, $filename);
+            $input['image'] =  $filename;
+        }
 
-       }
-     
         if ($user->update($input)) {
             return response()->json(['message' => 'Successfully Update Admin', 'data' => $user, 'status_code' => 200], 200);
         }

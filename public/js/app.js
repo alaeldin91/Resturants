@@ -23464,7 +23464,23 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-clipboard\"></i> <span>Manage Branch</span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-box\"></i> <span>Manage Floor </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-server\"></i> <span>Manage Catogry</span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-command\"></i> <span>Manage Printer </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-list\"></i> <span>Manage Product </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-inbox\"></i><span> Manage Order Type </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-dollar-sign\"></i><span> Manage Payment </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-shopping-cart\"></i><span>Orders</span></a></div><div class=\"nav-item has-sub\"><a href=\"#\"><i class=\"ik ik-bar-chart-2\"></i>Report </a><div class=\"submenu-content\"><a href=\"#\" class=\"menu-item\">All Orders Report </a></div><div class=\"submenu-content\"><a href=\"#\" class=\"menu-item\"> Orders Specific Branch </a></div></div>", 9);
+var _hoisted_12 = {
+  "class": "nav-item"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "ik ik-clipboard"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Manage Branch", -1
+/* HOISTED */
+);
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-box\"></i> <span>Manage Floor </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-server\"></i> <span>Manage Catogry</span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-command\"></i> <span>Manage Printer </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-list\"></i> <span>Manage Product </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-inbox\"></i><span> Manage Order Type </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-dollar-sign\"></i><span> Manage Payment </span></a></div><div class=\"nav-item\"><a href=\"#\"><i class=\"ik ik-shopping-cart\"></i><span>Orders</span></a></div><div class=\"nav-item has-sub\"><a href=\"#\"><i class=\"ik ik-bar-chart-2\"></i>Report </a><div class=\"submenu-content\"><a href=\"#\" class=\"menu-item\">All Orders Report </a></div><div class=\"submenu-content\"><a href=\"#\" class=\"menu-item\"> Orders Specific Branch </a></div></div>", 8);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -23487,7 +23503,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), _hoisted_12])])])]);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "home//manageBranch"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_13, _hoisted_14, _hoisted_15];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), _hoisted_16])])])]);
 }
 
 /***/ }),
@@ -23593,6 +23618,12 @@ var routes = [{
     name: 'manageUser',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_ManageUser_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/ManageUser.vue */ "./resources/js/components/ManageUser.vue"));
+    }
+  }, {
+    path: '/manageBranch',
+    name: '/manageBranch',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_ManageBranch_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/ManageBranch */ "./resources/js/components/ManageBranch.vue"));
     }
   }],
   beforeEnter: function beforeEnter(to, from, next) {
@@ -56316,7 +56347,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Dashboard_vue":1,"resources_js_components_ManageUser_vue":1,"resources_js_authAdmin_Register_vue":1,"resources_js_authAdmin_Login_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Dashboard_vue":1,"resources_js_components_ManageUser_vue":1,"resources_js_components_ManageBranch_vue":1,"resources_js_authAdmin_Register_vue":1,"resources_js_authAdmin_Login_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

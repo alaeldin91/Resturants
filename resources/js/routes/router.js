@@ -20,6 +20,11 @@ const routes = [
         name:'manageUser',
         component:()=>import('../components/ManageUser.vue')    
     },
+    {
+        path:'/manageBranch',
+        name:'/manageBranch',
+        component:()=>import('../components/ManageBranch')
+    }
 ],
 beforeEnter: (to, from, next) => {
     if(!Auth.islogin()){

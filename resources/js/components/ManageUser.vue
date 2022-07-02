@@ -183,7 +183,12 @@
                     v-text="validations.getMessage('image')"
                   ></span>
                   <div v-if="user.image">
-                    <img :src="`/owner_images/${user.image}`" ref="newImageProfileDisplay" class="w-150px"  v-bind:alt="user.mage" />
+                    <img
+                      :src="`/owner_images/user/${user.image}`"
+                      ref="newImageProfileDisplay"
+                      class="w-150px"
+                      v-bind:alt="user.mage"
+                    />
                   </div>
                   <input
                     type="file"
@@ -191,7 +196,6 @@
                     ref="newImageProfile"
                     class="form-control"
                     v-bind="user.image"
-                 
                   />
                 </div>
               </div>
@@ -309,14 +313,13 @@ export default {
 
     editUser(user) {
       this.isFormCreateUserMode = false;
-
-      window.axios
+         window.axios
         .get("api/auth/editAdmin/" + `${user.id}`)
         .then((response) => {
           this.user.id = response.data.User.id;
           this.user.name = response.data.User.name;
           this.user.email = response.data.User.email;
-          this.user.image = response.data.User.image
+          this.user.image = response.data.User.image;
           console.log("image", response.data.User.image);
         });
       $("#UserModal").modal("show");
@@ -334,24 +337,21 @@ export default {
         timer: 1500,
         timerProgressBar: true,
       });
-      try{
-      window.axios
-        .post("api/auth/updateOwner/"+`${userData.id}`, userData)
-        .then((response) => {
-          console.log(response.data);
-          Toast.fire({
-            icon: "success",
-            title: "Update Successfully",
+      try {
+        window.axios
+          .post("api/auth/updateOwner/" + `${userData.id}`, userData)
+          .then((response) => {
+            console.log(response.data);
+            Toast.fire({
+              icon: "success",
+              title: "Update Successfully",
+            });
+            this.getAllAdmin();
+            $("#UserModal").modal("hide"); // hide modal
           });
-          this.getAllAdmin();
-          $("#UserModal").modal("hide"); // hide modal
-        });
+      } catch (error) {
+        console.log(userData.image);
       }
-        catch(error){
-
-      console.log(userData.image);
-    
-}
     },
     close() {
       $("#UserModal").modal("hide"); // hide modal
@@ -405,10 +405,8 @@ export default {
         this.user.path;
         console.log(response.data.data);
       } catch (error) {
-        if(error.response.status ===401){
-
-
-}
+        if (error.response.status === 401) {
+        }
       }
     },
   },

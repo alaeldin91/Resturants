@@ -13,6 +13,9 @@ export default {
     updateOwner(id,data){
         return api().post(`api/auth/updateOwner/${id}`,data)
 
+    },
+    createBranch(data){
+        return api().post('api/auth/addbranch',data);
     }
 }
 

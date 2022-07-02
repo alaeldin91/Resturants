@@ -624,7 +624,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , _hoisted_49), $data.user.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: "/owner_images/".concat($data.user.image),
+    src: "/owner_images/user/".concat($data.user.image),
     ref: "newImageProfileDisplay",
     "class": "w-150px",
     alt: $data.user.mage
@@ -716,6 +716,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   updateOwner: function updateOwner(id, data) {
     return (0,_api__WEBPACK_IMPORTED_MODULE_0__["default"])().post("api/auth/updateOwner/".concat(id), data);
+  },
+  createBranch: function createBranch(data) {
+    return (0,_api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('api/auth/addbranch', data);
   }
 });
 

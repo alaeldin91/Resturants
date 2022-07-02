@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthControll;
+use App\Http\Controllers\ManageBranchControll;
+
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthControll::class, 'login']);
     Route::get('allUsers', [AuthControll::class, 'getOwner']);
     Route::post('addAdministrator', [AuthControll::class, 'addAdministrator']);
+    Route::post('addbranch', [ManageBranchControll::class, 'AddBranch']);
+
     Route::get('deleteowner/{id}', [AuthControll::class, 'deleteOwner']);
     Route::get('editAdmin/{id}', [AuthControll::class, 'editAdmin']);
 

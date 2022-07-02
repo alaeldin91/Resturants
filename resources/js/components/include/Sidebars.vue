@@ -32,9 +32,9 @@
             >
           </div>
           <div class="nav-item">
-            <a href="#"
-              ><i class="ik ik-clipboard"> </i> <span>Manage Branch</span></a
-            >
+            <router-link to="home//manageBranch">
+            <i class="ik ik-clipboard"> </i> <span>Manage Branch</span>
+            </router-link>
           </div>
           <div class="nav-item">
             <a href="#">
